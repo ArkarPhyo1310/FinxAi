@@ -118,18 +118,18 @@
   --color-gray-900: #050505;
   --color-gray-800: #141414;
   --color-gray-700: #212328;
-  --color-gray-600: #30333A;
-  --color-gray-500: #9095A1;
-  --color-gray-400: #CCDADC;
+  --color-gray-600: #30333a;
+  --color-gray-500: #9095a1;
+  --color-gray-400: #ccdadc;
 
   /* Vibrant Colors */
-  --color-blue-600: #5862FF;
-  --color-yellow-400: #FDD458;
-  --color-yellow-500: #E8BA40;
-  --color-teal-400: #0FEDBE;
-  --color-red-500: #FF495B;
-  --color-orange-500: #FF8243;
-  --color-purple-500: #D13BFF;
+  --color-blue-600: #5862ff;
+  --color-yellow-400: #fdd458;
+  --color-yellow-500: #e8ba40;
+  --color-teal-400: #0fedbe;
+  --color-red-500: #ff495b;
+  --color-orange-500: #ff8243;
+  --color-purple-500: #d13bff;
 }
 
 @layer base {
@@ -146,7 +146,7 @@
     @apply mx-auto max-w-screen-2xl px-4 md:px-6 lg:px-8;
   }
 
-  .yellow-btn {
+  .theme-btn {
     /* @apply h-12 cursor-pointer bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 active:from-yellow-600 active:to-yellow-700 text-black font-medium rounded-md px-4 py-2 shadow-md hover:shadow-lg active:shadow-sm transition-all duration-150; */
     @apply h-12 cursor-pointer 
     bg-gradient-to-r from-[#4F46E5] via-[#EC4899] to-[#F87171] 
@@ -161,7 +161,7 @@
   }
 
   .home-wrapper {
-    @apply flex flex-col gap-4 md:gap-10 items-center sm:items-start text-gray-400;
+    @apply text-gray-400 flex-col gap-4 md:gap-10 items-center sm:items-start;
   }
 
   .header {
@@ -171,4 +171,26 @@
   .header-wrapper {
     @apply flex justify-between items-center px-6 py-4 text-gray-500;
   }
+
+  .home-section {
+    @apply w-full gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3;
+  }
+}
+
+.tradingview-widget-container {
+  position: relative;
+  background-color: #141414 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.tradingview-widget-container__widget {
+  background-color: #141414 !important;
+  height: 100% !important;
+}
+
+.custom-chart.tradingview-widget-container iframe {
+  border: 1px solid #30333a;
+  border-radius: 8px !important;
+  overflow: hidden !important;
 }
