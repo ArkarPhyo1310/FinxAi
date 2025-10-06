@@ -1,6 +1,6 @@
 "use client";
 
-import { NAV_ITEMS } from "@/lib/constants";
+import { NAV_ITEMS } from "@/lib/stocksConfig";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
