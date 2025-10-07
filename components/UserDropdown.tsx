@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,10 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
+import useShowNavItems from "@/hooks/useShowNavItems";
 import { LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
+import HomeCombobox from "./HomeCombobox";
 import NavItems from "./NavItems";
+import { Button } from "./ui/button";
 
 const UserDropdown = () => {
   const router = useRouter();
@@ -20,6 +22,7 @@ const UserDropdown = () => {
     router.push("/sign-in");
   };
 
+  const showNavItems = useShowNavItems();
   const user = { name: "John Doe", email: "johndoe@gmail.com" };
 
   return (
@@ -67,9 +70,10 @@ const UserDropdown = () => {
           <LogOut className="h-4 w-5 mr-2 hidden sm:block" />
           Sign Out
         </DropdownMenuItem>
-        <DropdownMenuSeparator className="hidden sm:block bg-gray-600" />
+        <DropdownMenuSeparator className="block bg-gray-600" />
         <nav className="sm:hidden">
-          <NavItems />
+          <HomeCombobox />
+          {showNavItems && <NavItems />}
         </nav>
       </DropdownMenuContent>
     </DropdownMenu>

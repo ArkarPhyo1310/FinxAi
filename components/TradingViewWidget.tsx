@@ -32,7 +32,7 @@ const TradingViewWidget = ({
       >
         <div
           className="tradingview-widget-container__widget"
-          style={{ height, width: "100%" }} 
+          style={{ height, width: "100%" }}
         />
       </div>
     </div>

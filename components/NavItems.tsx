@@ -8,10 +8,8 @@ const NavItems = () => {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
-    console.log("Current pathname:", pathname);
     if (path === "/stocks/") return pathname === "/stocks";
     if (path === "/cryptos/") return pathname === "/cryptos";
-    console.log("Current pathname:", path);
 
     return pathname.startsWith(path);
   };
