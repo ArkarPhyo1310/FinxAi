@@ -1,5 +1,3 @@
-import StockHome from "./stocks/page";
-
 const Home = () => {
   return <div className="flex home-wrapper h-screen">Home Page</div>;
 };
