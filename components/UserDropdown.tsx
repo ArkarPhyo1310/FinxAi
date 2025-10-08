@@ -10,20 +10,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useShowNavItems from "@/hooks/useShowNavItems";
+import { signOut } from "@/lib/actions/auth.actions";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import HomeCombobox from "./HomeCombobox";
 import NavItems from "./NavItems";
 import { Button } from "./ui/button";
 
-const UserDropdown = () => {
+const UserDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
   const handleSignOut = async () => {
+    await signOut();
     router.push("/sign-in");
   };
 
   const showNavItems = useShowNavItems();
-  const user = { name: "John Doe", email: "johndoe@gmail.com" };
 
   return (
     <DropdownMenu>
