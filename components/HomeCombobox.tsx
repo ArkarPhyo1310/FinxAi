@@ -1,6 +1,6 @@
 "use client";
 
-import { Bitcoin, ChevronsDownIcon, SquareActivity } from "lucide-react";
+import { Bitcoin, ChevronsDown, SquareActivity } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ function HomeCombobox() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild className="bg-transparent">
+      <PopoverTrigger asChild className="bg-transparent mt-3 mb-3 ml-1">
         <Button
           variant="ghost"
           role="combobox"
@@ -49,7 +49,7 @@ function HomeCombobox() {
           {pathname === "/"
             ? "Home"
             : navOptions.find((nav) => nav.value === value)?.label}
-          <ChevronsDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[150px] p-0 bg-transparent border-0 font-medium">
