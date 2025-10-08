@@ -28,7 +28,7 @@ const SignIn = () => {
 
   return (
     <>
-      <h5 className="form-title">Log into Your Account</h5>
+      <h5 className="form-title">Log Into Your Account</h5>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
           name="email"
@@ -43,6 +43,7 @@ const SignIn = () => {
               message: "Invalid email address",
             },
           }}
+          type="email"
         />
 
         <InputField
@@ -72,7 +73,7 @@ const SignIn = () => {
           disabled={isSubmitting}
           className="theme-btn w-full mt-5"
         >
-          {isSubmitting ? "Logging Account ... " : "Enter Your Account"}
+          {isSubmitting ? "Logging in..." : "Enter Your Account"}
         </Button>
 
         <FooterLink

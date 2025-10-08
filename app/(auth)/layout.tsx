@@ -21,19 +21,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </section>
 
       <section className="auth-right-section scrollbar-hide-default relative">
-        {/* <div className="absolute inset-0 z-0 hidden lg:flex flex-1 items-center justify-center overflow-hidden">
-          <Galaxy
-            mouseRepulsion={false}
-            mouseInteraction={false}
-            density={0.5}
-            glowIntensity={0.5}
-            saturation={0}
-            hueShift={240}
-            speed={0}
-            disableAnimation={true}
-          />
-        </div> */}
-
         <div className="z-10 relative lg:mt-4 lg:mb-16">
           <blockquote className="auth-blockquote">
             &ldquo;Empowering your financial journey with intelligent insights
