@@ -7,7 +7,7 @@ import HomeCombobox from "./HomeCombobox";
 import NavItems from "./NavItems";
 import UserDropdown from "./UserDropdown";
 
-const Header = () => {
+const Header = ({ user }: { user: User }) => {
   const showNavItems = useShowNavItems();
 
   return (
@@ -16,7 +16,7 @@ const Header = () => {
         <Link href="/">
           <Image
             src="/assets/logo/logo.png"
-            alt="FinxAI Logo"
+            alt="FinxAI Logo" 
             width={140}
             height={32}
             className="w-auto cursor-pointer"
@@ -26,7 +26,7 @@ const Header = () => {
           <HomeCombobox />
           {showNavItems && <NavItems />}
         </nav>
-        <UserDropdown />
+        <UserDropdown user={user} />
       </div>
     </header>
   );
