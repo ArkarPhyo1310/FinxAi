@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer";
-import { WELCOME_EMAIL_TEMPLATE } from "./templates";
+import {
+  NEWS_SUMMARY_EMAIL_TEMPLATE,
+  WELCOME_EMAIL_TEMPLATE,
+} from "./templates";
 
 export const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -25,6 +28,31 @@ export const sendWelcomeEmail = async ({
     subject:
       "Welcome to FinxAI - your finance market (stocks & cryptos) toolkit is ready!",
     text: "Thanks for joining FinxAI",
+    html: htmlTemplate,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+export const sendNewsSummaryEmail = async ({
+  email,
+  date,
+  newsContent,
+}: {
+  email: string;
+  date: string;
+  newsContent: string;
+}): Promise<void> => {
+  const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE.replace(
+    "{{date}}",
+    date
+  ).replace("{{newsContent}}", newsContent);
+
+  const mailOptions = {
+    from: "FinxAI News<arkarphyo.akp1996@gmail.com>",
+    to: email,
+    subject: `📈 Market News Summary Today - ${date}`,
+    text: `Today's market news summary from FinxAI`,
     html: htmlTemplate,
   };
 
