@@ -16,13 +16,7 @@ import HomeCombobox from "./HomeCombobox";
 import NavItems from "./NavItems";
 import { Button } from "./ui/button";
 
-const UserDropdown = ({
-  user,
-  initialStocks,
-}: {
-  user: User;
-  initialStocks: StockWithWatchListStatus[];
-}) => {
+const UserDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
   const handleSignOut = async () => {
     await signOut();
@@ -71,13 +65,13 @@ const UserDropdown = ({
           onClick={handleSignOut}
           className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-[#37D0EE] transition-colors cursor-pointer"
         >
-          <LogOut className="h-4 w-5 mr-2 hidden sm:block" />
+          <LogOut className="h-4 w-5 mr-2 sm:block" />
           Sign Out
         </DropdownMenuItem>
         <DropdownMenuSeparator className="block bg-gray-600" />
         <nav className="sm:hidden">
           <HomeCombobox />
-          <NavItems initialStocks={initialStocks} />
+          <NavItems />
         </nav>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -29,8 +29,13 @@ function HomeCombobox() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const currentNavOption = navOptions.find((nav) => nav.value === pathname);
-    setValue(currentNavOption ? currentNavOption.value : "");
+    if (pathname.startsWith("/stocks")) {
+      setValue("/stocks");
+    } else if (pathname.startsWith("/cryptos")) {
+      setValue("/cryptos");
+    } else {
+      setValue("Home");
+    }
   }, [pathname]);
 
   const handleClick = (path: string) => {
@@ -46,9 +51,9 @@ function HomeCombobox() {
           aria-expanded={open}
           className="w-[150px] justify-between items-center light-blue-text font-medium text-gray-100 glass-effect"
         >
-          {pathname === "/"
+          {pathname === "/" || pathname === "/ai"
             ? "Home"
-            : navOptions.find((nav) => nav.value === value)?.label}
+            : navOptions.find((nav) => nav.value === value)?.label || ""}
           <ChevronsDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

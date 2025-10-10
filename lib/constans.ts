@@ -1,7 +1,6 @@
 export const NAV_ITEMS = [
-  { href: "/", title: "Dashboard" },
   { href: "/search", title: "Search" },
-  { href: "/watchlist", title: "Watchlist" },
+  { href: "/ai", title: "AI" },
 ];
 
 export const INVESTMENT_GOALS = [

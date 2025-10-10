@@ -1,24 +1,31 @@
 "use client";
 
-import { NAV_ITEMS } from "@/lib/constans";
+import { Search, Stars } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchBox from "./SearchBox";
 
-const NavItems = ({
-  initialStocks,
-}: {
-  initialStocks: StockWithWatchListStatus[];
-}) => {
+interface NAVITEMS {
+  href: string;
+  title: string;
+}
+
+const NavItems = () => {
   const pathname = usePathname();
 
-  let finnType = null;
+  let navItems: NAVITEMS[] = [];
   if (pathname?.startsWith("/stocks")) {
-    finnType = "stocks";
+    navItems = [
+      { href: "/stocks", title: "Dashboard" },
+      { href: "/stocks/watchlist", title: "Watchlist" },
+      { href: "/stocks/news", title: "News" },
+    ];
   } else if (pathname?.startsWith("/cryptos")) {
-    finnType = "cryptos";
-  } else {
-    finnType = null;
+    navItems = [
+      { href: "/cryptos", title: "Dashboard" },
+      { href: "/cryptos/watchlist", title: "Watchlist" },
+      { href: "/cryptos/news", title: "News" },
+    ];
   }
 
   const isActive = (path: string) => {
@@ -28,38 +35,51 @@ const NavItems = ({
     return pathname.startsWith(path);
   };
 
-  return finnType ? (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full">
-      <ul className="flex flex-col sm:flex-row p-2 gap-3 sm:gap-10 font-medium">
-        {NAV_ITEMS.map(({ href, title }) => {
-          if (href == "/search")
-            return (
-              <li key="search-trigger">
-                <SearchBox
-                  renderAs="text"
-                  label="Search"
-                  initialStocks={initialStocks}
-                />
-              </li>
-            );
-          return (
-            <li key={href}>
-              <Link
-                href={pathname + href}
-                className={`light-blue-text transition-colors ${
-                  isActive(pathname + href) ? "text-blue-400" : "text-gray-100"
-                }`}
-              >
-                {title}
-              </Link>
-            </li>
-          );
-          return null;
-        })}
-      </ul>
-    </div>
-  ) : (
-    <></>
+  return (
+    <>
+      {navItems.length > 0 && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full">
+          <ul className="flex flex-col sm:flex-row p-2 gap-3 sm:gap-10 font-medium">
+            {navItems.map(({ href, title }) => {
+              if (href.endsWith("search"))
+                return (
+                  <li key="search-trigger">
+                    <SearchBox renderAs="text" label="Search" />
+                  </li>
+                );
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`light-blue-text transition-colors ${
+                      isActive(href) ? "text-blue-400" : "text-gray-100"
+                    }`}
+                  >
+                    {title}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+      <div className="flex gap-3 items-center justify-start m-3 hover:text-sky-500">
+        <Search className="h-4 w-4" />
+        <SearchBox renderAs="text" label="Search" />
+      </div>
+
+      <div className="flex gap-3 items-center justify-start m-3 hover:text-sky-500">
+        <Stars className="h-4 w-4" />
+        <Link
+          href="/ai"
+          className={`light-blue-text transition-colors ${
+            isActive("/ai") ? "text-sky-400" : "text-gray-100"
+          }`}
+        >
+          AI
+        </Link>
+      </div>
+    </>
   );
 };
 
