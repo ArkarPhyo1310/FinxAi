@@ -16,7 +16,7 @@ const SelectField = ({
   control,
   error,
   required = false,
-}: SelectFileProps) => {
+}: SelectFieldProps) => {
   return (
     <div className="space-y-2 w-full">
       <Label htmlFor={name} className="form-label">
