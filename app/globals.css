@@ -143,8 +143,9 @@
 
 @layer utilities {
   .glass-effect {
-    @apply rounded-3xl backdrop-blur-sm backdrop-saturate-100 shadow-[0_8px_32px_0_#0d2626,inset_0_1px_0_0_rgba(255,255,255,0.2)] transition-all duration-500;
+    @apply !bg-transparent rounded-3xl backdrop-blur-sm backdrop-saturate-100 shadow-[0_8px_32px_0_#0d2626,inset_0_1px_0_0_rgba(255,255,255,0.2)] transition-all duration-500;
   }
+
   .container {
     @apply mx-auto max-w-screen-2xl px-4 md:px-6 lg:px-8;
   }
@@ -251,27 +252,35 @@
   }
 
   .search-dialog {
-    @apply !bg-gray-800 lg:min-w-[800px] border-gray-600 fixed top-10 left-1/2 -translate-x-1/2 translate-y-10;
+    @apply !bg-transparent lg:min-w-[800px] border-gray-600 fixed top-10 left-1/2 -translate-x-1/2 translate-y-10;
+  }
+
+  .search-dialog [cmdk-root] {
+    @apply !bg-transparent;
+  }
+
+  .search-dialog [cmdk-empty] {
+    @apply !bg-transparent;
   }
 
   .search-field {
-    @apply !bg-gray-800 border-b border-gray-600 relative;
+    @apply !bg-transparent border-b border-gray-600 relative;
   }
 
   .search-list {
-    @apply !bg-gray-800 max-h-[400px];
+    @apply !bg-transparent max-h-[400px];
   }
 
   .search-list-indicator {
-    @apply px-5 py-2;
+    @apply !bg-transparent px-5 py-2;
   }
 
   .search-list-empty {
-    @apply py-6 !bg-transparent text-center text-gray-500;
+    @apply !bg-transparent py-6 text-center text-gray-500;
   }
 
   .search-input {
-    @apply !bg-gray-800 border-0 text-gray-400 placeholder:text-gray-500 focus:ring-0 text-base h-14 pr-10;
+    @apply !bg-transparent border-0 text-gray-400 placeholder:text-gray-500 focus:ring-0 text-base h-14 pr-10;
   }
 
   .search-loader {
@@ -283,11 +292,11 @@
   }
 
   .search-item {
-    @apply rounded-none my-3 px-1 w-full data-[selected=true]:bg-gray-600;
+    @apply !bg-transparent rounded-none my-3 px-1 w-full data-[selected=true]:bg-gray-600;
   }
 
   .search-item-link {
-    @apply px-2 w-full cursor-pointer border-b border-gray-600 last:border-b-0 transition-colors flex items-center gap-3;
+    @apply !bg-transparent px-2 w-full cursor-pointer border-b border-gray-600 last:border-b-0 transition-colors flex items-center gap-3;
   }
 
   .search-item-name {

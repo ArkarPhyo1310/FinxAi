@@ -86,3 +86,29 @@ export const POPULAR_STOCK_SYMBOLS = [
   "GRAB",
   "SE",
 ];
+
+export const POPULAR_CRYPTO_SYMBOLS = [
+  // Major Cryptocurrencies
+  "BINANCE:BTCUSDT", // Bitcoin
+  "BINANCE:ETHUSDT", // Ethereum
+  "BINANCE:BNBUSDT", // Binance Coin
+  "BINANCE:SOLUSDT", // Solana
+  "BINANCE:XRPUSDT", // Ripple
+  "BINANCE:ADAUSDT", // Cardano
+  "BINANCE:DOGEUSDT", // Dogecoin
+  "BINANCE:SHIBUSDT", // Shiba Inu
+  "BINANCE:DOTUSDT", // Polkadot
+  "BINANCE:AVAXUSDT", // Avalanche
+
+  // Other Popular Cryptocurrencies
+  "BINANCE:LINKUSDT", // Chainlink
+  "BINANCE:LTCUSDT", // Litecoin
+  "BINANCE:BCHUSDT", // Bitcoin Cash
+  "BINANCE:TRXUSDT", // Tron
+  "BINANCE:MATICUSDT", // Polygon
+  "BINANCE:UNIUSDT", // Uniswap
+  "BINANCE:ICPUSDT", // Internet Computer
+  "BINANCE:ETCUSDT", // Ethereum Classic
+  "BINANCE:XLMUSDT", // Stellar
+  "BINANCE:VETUSDT", // VeChain
+];

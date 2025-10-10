@@ -98,6 +98,44 @@ declare global {
     related: string;
     image?: string;
   };
+
+  type Stock = {
+    symbol: string;
+    name: string;
+    exchange: string;
+    type: string;
+  };
+
+  type StockWithWatchListStatus = Stock & {
+    isInWatchlist: boolean;
+  };
+
+  type FinnhubSearchResult = {
+    symbol: string;
+    description: string;
+    displaySymbol?: string;
+    type: string;
+  };
+
+  type FinnhubSearchResponse = {
+    count: number;
+    result: FinnhubSearchResult[];
+  };
+
+  type SearchCommandProps = {
+    renderAs?: "button" | "text";
+    label?: string;
+    initialStocks: StockWithWatchlistStatus[];
+  };
+
+  type SearchCommandProps = {
+    open?: boolean;
+    setOpen?: (open: boolean) => void;
+    renderAs?: "button" | "text";
+    buttonLabel?: string;
+    buttonVariant?: "primary" | "secondary";
+    className?: string;
+  };
 }
 
 export {};
