@@ -6,11 +6,7 @@ import InputField from "@/components/forms/InputField";
 import SelectField from "@/components/forms/SelectField";
 import { Button } from "@/components/ui/button";
 import { signUpWithEmail } from "@/lib/actions/auth.actions";
-import {
-  INVESTMENT_GOALS,
-  RISK_TOLERANCE_OPTIONS,
-  PREFERRED_INDUSTRIES,
-} from "@/lib/constans";
+import { INVESTMENT_GOALS, RISK_TOLERANCE_OPTIONS, PREFERRED_INDUSTRIES } from "@/lib/constans";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -42,17 +38,12 @@ const SignUp = () => {
       if (result.success) router.push("/");
       else
         toast.error("Sign up failed!", {
-          description: result.error
-            ? result.error
-            : "Failed to create an account.",
+          description: result.error ? result.error : "Failed to create an account.",
         });
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Sign up failed!", {
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to create an account.",
+        description: error instanceof Error ? error.message : "Failed to create an account.",
       });
     }
   };
@@ -103,21 +94,13 @@ const SignUp = () => {
               message: "Password must be at least 8 characters long",
             },
             pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message:
-                "Password must include uppercase, lowercase, number, and special character",
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message: "Password must include uppercase, lowercase, number, and special character",
             },
           }}
         />
 
-        <CountrySelectField
-          name="country"
-          label="Country"
-          control={control}
-          error={errors.country}
-          required
-        />
+        <CountrySelectField name="country" label="Country" control={control} error={errors.country} required />
 
         <div className="grid w-full gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center">
           <SelectField
@@ -151,21 +134,11 @@ const SignUp = () => {
           />
         </div>
 
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="theme-btn w-full mt-5"
-        >
-          {isSubmitting
-            ? "Creating Account ... "
-            : "Start Your Investing Journey"}
+        <Button type="submit" disabled={isSubmitting} className="theme-btn w-full mt-5">
+          {isSubmitting ? "Creating Account ... " : "Start Your Investing Journey"}
         </Button>
 
-        <FooterLink
-          text="Already have an account?"
-          linkText="Sign In"
-          href="/sign-in"
-        />
+        <FooterLink text="Already have an account?" linkText="Sign In" href="/sign-in" />
       </form>
     </>
   );

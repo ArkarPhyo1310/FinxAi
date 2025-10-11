@@ -24,9 +24,7 @@ export default function WatchlistButton({ symbol }: WatchlistButtonProps) {
       const list: string[] = JSON.parse(localStorage.getItem(key) || "[]");
       const upper = symbol.toUpperCase();
       const exists = list.includes(upper);
-      const newList = exists
-        ? list.filter((s) => s !== upper)
-        : [...list, upper];
+      const newList = exists ? list.filter((s) => s !== upper) : [...list, upper];
       localStorage.setItem(key, JSON.stringify(newList));
       setSaved(!exists);
     } catch {
@@ -39,9 +37,7 @@ export default function WatchlistButton({ symbol }: WatchlistButtonProps) {
     <button
       type="button"
       onClick={toggle}
-      className={`px-3 py-1 rounded text-sm ${
-        saved ? "bg-yellow-400 text-black" : "bg-gray-200 text-gray-800"
-      }`}
+      className={`px-3 py-1 rounded text-sm ${saved ? "bg-yellow-400 text-black" : "bg-gray-200 text-gray-800"}`}
     >
       {saved ? "Remove from Watchlist" : "Add to Watchlist"}
     </button>

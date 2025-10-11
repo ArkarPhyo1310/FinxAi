@@ -14,14 +14,13 @@ const WatchlistSchema = new Schema<WatchlistItem>(
     company: { type: String, required: true, trim: true },
     addedAt: { type: Date, default: Date.now },
   },
-  { timestamps: false }
+  { timestamps: false },
 );
 
 // Add a compound unique index on userId and symbol
 WatchlistSchema.index({ userId: 1, symbol: 1 }, { unique: true });
 
 const Watchlist: Model<WatchlistItem> =
-  (models?.Watchlist as Model<WatchlistItem>) ||
-  model<WatchlistItem>("Watchlist", WatchlistSchema);
+  (models?.Watchlist as Model<WatchlistItem>) || model<WatchlistItem>("Watchlist", WatchlistSchema);
 
 export default Watchlist;

@@ -2,11 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const useTradingViewWidget = (
-  scriptUrl: string,
-  config: Record<string, unknown>,
-  height: number = 600
-) => {
+const useTradingViewWidget = (scriptUrl: string, config: Record<string, unknown>, height: number = 600) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

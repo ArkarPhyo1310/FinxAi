@@ -1,22 +1,8 @@
 import { Label } from "@/components/ui/label";
 import { Controller } from "react-hook-form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const SelectField = ({
-  name,
-  label,
-  placeholder,
-  options,
-  control,
-  error,
-  required = false,
-}: SelectFieldProps) => {
+const SelectField = ({ name, label, placeholder, options, control, error, required = false }: SelectFieldProps) => {
   return (
     <div className="space-y-2 w-full">
       <Label htmlFor={name} className="form-label">
@@ -36,11 +22,7 @@ const SelectField = ({
             </SelectTrigger>
             <SelectContent className="border-gray-600 text-white !bg-transparent glass-effect">
               {options.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value}
-                  className="focus:bg-transparent focus:text-sky-500"
-                >
+                <SelectItem key={option.value} value={option.value} className="focus:bg-transparent focus:text-sky-500">
                   {option.label}
                 </SelectItem>
               ))}

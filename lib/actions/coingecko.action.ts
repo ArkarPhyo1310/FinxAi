@@ -6,9 +6,7 @@
  * @param query The search string for the crypto asset.
  * @returns A promise that resolves to an array of StockWithWatchlistStatus-like objects for cryptos.
  */
-export const searchCryptos = async (
-  query?: string
-): Promise<StockWithWatchlistStatus[]> => {
+export const searchCryptos = async (query?: string): Promise<StockWithWatchlistStatus[]> => {
   try {
     const trimmed = typeof query === "string" ? query.trim() : "";
     if (!trimmed) {
@@ -33,9 +31,7 @@ export const searchCryptos = async (
         isInWatchlist: false,
       }));
     }
-    const url = `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(
-      trimmed
-    )}`;
+    const url = `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(trimmed)}`;
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to fetch from CoinGecko");
     const data = await res.json();
