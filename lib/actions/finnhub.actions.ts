@@ -122,7 +122,7 @@ export async function getNews(
 }
 
 export const searchStocks = cache(
-  async (query?: string): Promise<StockWithWatchListStatus[]> => {
+  async (query?: string): Promise<StockWithWatchlistStatus[]> => {
     try {
       const token = process.env.FINNHUB_API_KEY ?? NEXT_PUBLIC_FINNHUB_API_KEY;
 
@@ -179,7 +179,7 @@ export const searchStocks = cache(
         results = Array.isArray(data?.result) ? data.result : [];
       }
 
-      const mapped: StockWithWatchListStatus[] = results
+      const mapped: StockWithWatchlistStatus[] = results
         .map((r) => {
           const upper = (r.symbol || "").toUpperCase();
           const name = r.description || upper;
@@ -190,7 +190,7 @@ export const searchStocks = cache(
             | undefined;
           const exchange = exchangeFromDisplay || exchangeFromProfile || "US";
           const type = r.type || "Stock";
-          const item: StockWithWatchListStatus = {
+          const item: StockWithWatchlistStatus = {
             symbol: upper,
             name,
             exchange,

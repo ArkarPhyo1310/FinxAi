@@ -6,7 +6,10 @@ import {
   CommandInput,
   CommandList,
 } from "@/components/ui/command";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useDebounce } from "@/hooks/userDebounce";
+import { searchCryptos } from "@/lib/actions/coingecko.action";
 import { searchStocks } from "@/lib/actions/finnhub.actions";
 import { Loader2, Star, TrendingUp } from "lucide-react";
 import Link from "next/link";
@@ -16,16 +19,45 @@ import { Button } from "./ui/button";
 const SearchBox = ({
   renderAs = "button",
   label = "Add stock",
-  initialStocks,
 }: SearchCommandProps) => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
-  const [stocks, setStocks] =
-    useState<StockWithWatchListStatus[]>(initialStocks);
+  const [assets, setAssets] = useState<
+    StockWithWatchlistStatus[] | CryptoWithWatchlistStatus[]
+  >([]);
+  const [initialStocks, setInitialStocks] = useState<
+    StockWithWatchlistStatus[]
+  >([]);
+  const [initialCryptos, setInitialCryptos] = useState<
+    CryptoWithWatchlistStatus[]
+  >([]);
+  const [filter, setFilter] = useState<"stocks" | "cryptos">("stocks");
+
+  // Fetch initial stocks and cryptos only once
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([searchStocks(), searchCryptos()]).then(([stocks, cryptos]) => {
+      if (!mounted) return;
+      setInitialStocks(stocks);
+      setInitialCryptos(cryptos);
+      // Set initial assets based on default filter
+      setAssets(filter === "stocks" ? stocks : cryptos);
+    });
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // When filter changes, reset assets to the correct initial list
+  useEffect(() => {
+    setAssets(filter === "stocks" ? initialStocks : initialCryptos);
+    setSearchTerm("");
+  }, [filter, initialStocks, initialCryptos]);
 
   const isSearchMode = !!searchTerm.trim();
-  const displayStocks = isSearchMode ? stocks : stocks?.slice(0, 10);
+  const displayAssets = isSearchMode ? assets : assets?.slice(0, 10);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -39,14 +71,21 @@ const SearchBox = ({
   }, []);
 
   const handleSearch = async () => {
-    if (!isSearchMode) return setStocks(initialStocks);
+    if (!isSearchMode) {
+      setAssets(filter === "stocks" ? initialStocks : initialCryptos);
+      return;
+    }
 
     setLoading(true);
     try {
-      const results = await searchStocks(searchTerm.trim());
-      setStocks(results);
+      let results: StockWithWatchlistStatus[] = [];
+      results =
+        filter === "stocks"
+          ? await searchStocks(searchTerm.trim())
+          : await searchCryptos(searchTerm.trim());
+      setAssets(results);
     } catch {
-      setStocks([]);
+      setAssets([]);
     } finally {
       setLoading(false);
     }
@@ -59,10 +98,9 @@ const SearchBox = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
-  const handleSelectStock = () => {
+  const handleSelectAsset = () => {
     setOpen(false);
     setSearchTerm("");
-    setStocks(initialStocks);
   };
 
   return (
@@ -86,34 +124,86 @@ const SearchBox = ({
           <CommandInput
             value={searchTerm}
             onValueChange={setSearchTerm}
-            placeholder="Search Stocks..."
+            placeholder={
+              filter === "stocks" ? "Search Stocks..." : "Search Cryptos..."
+            }
             className="search-input"
           />
           {loading && <Loader2 className="search-loader" />}
+
+          <RadioGroup
+            value={filter}
+            onValueChange={(val) => setFilter(val as "stocks" | "cryptos")}
+            className="flex items-center gap-4 m-4"
+          >
+            <div
+              className={`flex items-center gap-3 group cursor-pointer ${
+                filter === "stocks" ? "text-sky-500" : ""
+              }`}
+            >
+              <RadioGroupItem
+                value="stocks"
+                id="stocks"
+                className={`cursor-pointer group-hover:border-sky-500 group-hover:ring-sky-500 ${
+                  filter === "stocks" ? "border-sky-500 ring-sky-500" : ""
+                }`}
+              />
+              <Label
+                htmlFor="stocks"
+                className={`cursor-pointer group-hover:text-sky-400 transition-colors ${
+                  filter === "stocks" ? "text-sky-500 font-semibold" : ""
+                }`}
+              >
+                Stocks
+              </Label>
+            </div>
+            <div
+              className={`flex items-center gap-3 group cursor-pointer ${
+                filter === "cryptos" ? "text-sky-500" : ""
+              }`}
+            >
+              <RadioGroupItem
+                value="cryptos"
+                id="cryptos"
+                className={`cursor-pointer group-hover:border-sky-500 group-hover:ring-sky-500 ${
+                  filter === "cryptos" ? "border-sky-500 ring-sky-500" : ""
+                }`}
+              />
+              <Label
+                htmlFor="cryptos"
+                className={`cursor-pointer group-hover:text-sky-400 transition-colors ${
+                  filter === "cryptos" ? "text-sky-500 font-semibold" : ""
+                }`}
+              >
+                Cryptos
+              </Label>
+            </div>
+          </RadioGroup>
         </div>
+
         <CommandList className="search-list">
           {loading ? (
             <CommandEmpty>No results found.</CommandEmpty>
-          ) : displayStocks?.length === 0 ? (
+          ) : displayAssets?.length === 0 ? (
             <div className="search-list-indicator">
               {isSearchMode ? "No results found." : "No stocks available."}
             </div>
           ) : (
             <ul>
-              {displayStocks?.map((stock) => (
-                <li key={stock.symbol} className="search-item">
+              {displayAssets?.map((asset) => (
+                <li key={asset.symbol} className="search-item">
                   <Link
-                    href={`/stocks/${stock.symbol}`}
-                    onClick={handleSelectStock}
+                    href={`/${filter}/${asset.symbol}`}
+                    onClick={handleSelectAsset}
                     className="search-item-link"
                   >
                     <TrendingUp className="h-4 w-4 text-gray-500" />
                     <div className="flex-1">
                       <div className="search-item-name hover:text-sky-500">
-                        {stock.name}
+                        {asset.name}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {stock.symbol} | {stock.exchange} | {stock.type}
+                        {asset.symbol} | {asset.type}
                       </div>
                     </div>
                     <Star />
