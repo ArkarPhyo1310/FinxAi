@@ -38,8 +38,7 @@ const SignIn = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Demo sign-in failed!", {
-        description:
-          error instanceof Error ? error.message : "Failed to sign in.",
+        description: error instanceof Error ? error.message : "Failed to sign in.",
       });
     } finally {
       setDemoLoading(false);
@@ -54,8 +53,7 @@ const SignIn = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Sign in failed!", {
-        description:
-          error instanceof Error ? error.message : "Failed to sign in.",
+        description: error instanceof Error ? error.message : "Failed to sign in.",
       });
     }
   };
@@ -94,37 +92,21 @@ const SignIn = () => {
               message: "Password must be at least 8 characters long",
             },
             pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message:
-                "Password must include uppercase, lowercase, number, and special character",
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message: "Password must include uppercase, lowercase, number, and special character",
             },
           }}
         />
 
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="theme-btn w-full mt-5"
-        >
+        <Button type="submit" disabled={isSubmitting} className="theme-btn w-full mt-5">
           {isSubmitting ? "Logging in..." : "Enter Your Account"}
         </Button>
 
-        <Button
-          type="button"
-          variant="secondary"
-          disabled={demoLoading}
-          className="w-full mt-2"
-          onClick={handleDemo}
-        >
+        <Button type="button" variant="secondary" disabled={demoLoading} className="w-full mt-2" onClick={handleDemo}>
           {demoLoading ? "Starting Demo..." : "Try Demo"}
         </Button>
 
-        <FooterLink
-          text="Dont't have an account?"
-          linkText="Sign Up"
-          href="/sign-up"
-        />
+        <FooterLink text="Dont't have an account?" linkText="Sign Up" href="/sign-up" />
       </form>
     </>
   );

@@ -4,10 +4,7 @@ import { getWatchlistSymbolsByEmail } from "../actions/watchlist.actions";
 import { sendNewsSummaryEmail, sendWelcomeEmail } from "../nodemailer";
 import { getFormattedTodayDate } from "../utils";
 import { inngest } from "./client";
-import {
-  NEWS_SUMMARY_EMAIL_PROMPT,
-  PERSONALIZED_WELCOME_EMAIL_PROMPT,
-} from "./prompts";
+import { NEWS_SUMMARY_EMAIL_PROMPT, PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompts";
 
 export const sendSignUpEmail = inngest.createFunction(
   { id: "sign-up-email" },
@@ -20,10 +17,7 @@ export const sendSignUpEmail = inngest.createFunction(
         - Preferred industry: ${event.data.preferredIndustry}
     `;
 
-    const prompt = PERSONALIZED_WELCOME_EMAIL_PROMPT.replace(
-      "{{userProfile}}",
-      userProfile
-    );
+    const prompt = PERSONALIZED_WELCOME_EMAIL_PROMPT.replace("{{userProfile}}", userProfile);
 
     const response = await step.ai.infer("generate-welcome-intro", {
       model: step.ai.models.gemini({
@@ -56,7 +50,7 @@ export const sendSignUpEmail = inngest.createFunction(
       success: true,
       message: "Welcome email sent successfully",
     };
-  }
+  },
 );
 
 export const sendDailyNewsEmail = inngest.createFunction(
@@ -65,8 +59,7 @@ export const sendDailyNewsEmail = inngest.createFunction(
   async ({ step }) => {
     const users = await step.run("get-all-users", getAllUsersForNewsEmail);
 
-    if (!users || users.length === 0)
-      return { success: false, message: "No users found for news email." };
+    if (!users || users.length === 0) return { success: false, message: "No users found for news email." };
 
     const results = await step.run("fetch-user-news", async () => {
       const perUser: { user: User; articles: MarketNewsArticle[] }[] = [];
@@ -94,10 +87,7 @@ export const sendDailyNewsEmail = inngest.createFunction(
 
     for (const { user, articles } of results) {
       try {
-        const prompt = NEWS_SUMMARY_EMAIL_PROMPT.replace(
-          "{{newsData}}",
-          JSON.stringify(articles, null, 2)
-        );
+        const prompt = NEWS_SUMMARY_EMAIL_PROMPT.replace("{{newsData}}", JSON.stringify(articles, null, 2));
 
         const response = await step.ai.infer(`summarize-news-${user.email}`, {
           model: step.ai.models.gemini({
@@ -107,8 +97,7 @@ export const sendDailyNewsEmail = inngest.createFunction(
         });
 
         const part = response.candidates?.[0]?.content?.parts?.[0];
-        const newsContent =
-          (part && "text" in part ? part.text : null) || "No market news.";
+        const newsContent = (part && "text" in part ? part.text : null) || "No market news.";
 
         userNewsSummaries.push({ user, newsContent });
       } catch (e) {
@@ -126,12 +115,12 @@ export const sendDailyNewsEmail = inngest.createFunction(
             date: getFormattedTodayDate(),
             newsContent,
           });
-        })
+        }),
       );
     });
     return {
       success: true,
       message: "Daily news summary emails sent successfully.",
     };
-  }
+  },
 );

@@ -1,8 +1,5 @@
 import nodemailer from "nodemailer";
-import {
-  NEWS_SUMMARY_EMAIL_TEMPLATE,
-  WELCOME_EMAIL_TEMPLATE,
-} from "./templates";
+import { NEWS_SUMMARY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "./templates";
 
 export const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -12,21 +9,13 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendWelcomeEmail = async ({
-  email,
-  name,
-  intro,
-}: WelcomeEmailData) => {
-  const htmlTemplate = WELCOME_EMAIL_TEMPLATE.replace("{{name}}", name).replace(
-    "{{intro}}",
-    intro
-  );
+export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData) => {
+  const htmlTemplate = WELCOME_EMAIL_TEMPLATE.replace("{{name}}", name).replace("{{intro}}", intro);
 
   const mailOptions = {
     from: `"FinxAI" <arkarphyo.akp1996@gmail.com>`,
     to: email,
-    subject:
-      "Welcome to FinxAI - your finance market (stocks & cryptos) toolkit is ready!",
+    subject: "Welcome to FinxAI - your finance market (stocks & cryptos) toolkit is ready!",
     text: "Thanks for joining FinxAI",
     html: htmlTemplate,
   };
@@ -43,10 +32,7 @@ export const sendNewsSummaryEmail = async ({
   date: string;
   newsContent: string;
 }): Promise<void> => {
-  const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE.replace(
-    "{{date}}",
-    date
-  ).replace("{{newsContent}}", newsContent);
+  const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE.replace("{{date}}", date).replace("{{newsContent}}", newsContent);
 
   const mailOptions = {
     from: "FinxAI News<arkarphyo.akp1996@gmail.com>",

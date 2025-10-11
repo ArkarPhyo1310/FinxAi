@@ -13,7 +13,7 @@ export const getAllUsersForNewsEmail = async () => {
       .collection("user")
       .find(
         { email: { $exists: true, $nin: [null, "demo@finxai.app"] } },
-        { projection: { _id: 1, id: 1, email: 1, name: 1, country: 1 } }
+        { projection: { _id: 1, id: 1, email: 1, name: 1, country: 1 } },
       )
       .toArray();
 

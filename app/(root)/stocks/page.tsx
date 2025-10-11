@@ -1,12 +1,8 @@
 import TradingViewWidget from "@/components/TradingViewWidget";
-import {
-  HEATMAP_WIDGET_CONFIG,
-  MARKET_OVERVIEW_WIDGET_CONFIG,
-} from "@/lib/stocksConfig";
+import { HEATMAP_WIDGET_CONFIG, MARKET_OVERVIEW_WIDGET_CONFIG } from "@/lib/stocksConfig";
 
 const StockHome = () => {
-  const scriptUrlBase =
-    "https://s3.tradingview.com/external-embedding/embed-widget-";
+  const scriptUrlBase = "https://s3.tradingview.com/external-embedding/embed-widget-";
 
   return (
     <div className="flex h-screen home-wrapper w-full">

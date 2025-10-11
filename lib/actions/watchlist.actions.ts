@@ -8,9 +8,7 @@ import Watchlist from "@/database/models/watchlist.model";
  * @param email The email of the user.
  * @returns A promise that resolves to an array of stock symbols (strings).
  */
-export async function getWatchlistSymbolsByEmail(
-  email: string
-): Promise<string[]> {
+export async function getWatchlistSymbolsByEmail(email: string): Promise<string[]> {
   if (!email) return [];
 
   try {
@@ -29,10 +27,7 @@ export async function getWatchlistSymbolsByEmail(
     const userId = (user.id as string) || String(user._id || "");
     if (!userId) return [];
 
-    const watchlistItems = await Watchlist.find(
-      { userId },
-      { symbol: 1 }
-    ).lean(); // Use lean() for faster queries when not modifying documents
+    const watchlistItems = await Watchlist.find({ userId }, { symbol: 1 }).lean(); // Use lean() for faster queries when not modifying documents
 
     return watchlistItems.map((item) => String(item.symbol));
   } catch (error) {

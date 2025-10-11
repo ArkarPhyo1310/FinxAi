@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Stars } from "lucide-react";
+import { Stars } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchBox from "./SearchBox";
@@ -63,22 +63,17 @@ const NavItems = () => {
           </ul>
         </div>
       )}
-      <div className="flex gap-3 items-center justify-start m-3 hover:text-sky-500">
-        <Search className="h-4 w-4" />
-        <SearchBox renderAs="text" label="Search" />
-      </div>
+      <SearchBox renderAs="text" label="Search" />
 
-      <div className="flex gap-3 items-center justify-start m-3 hover:text-sky-500">
+      <Link
+        href="/ai"
+        className={`flex gap-3 items-center justify-start m-3 transition-colors hover:text-sky-500 ${
+          isActive("/ai") ? "text-sky-500" : "text-gray-400"
+        }`}
+      >
         <Stars className="h-4 w-4" />
-        <Link
-          href="/ai"
-          className={`light-blue-text transition-colors ${
-            isActive("/ai") ? "text-sky-400" : "text-gray-100"
-          }`}
-        >
-          AI
-        </Link>
-      </div>
+        AI
+      </Link>
     </>
   );
 };

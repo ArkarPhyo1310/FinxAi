@@ -27,9 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body
-        className={`${firaSans.variable} ${firaMono.variable} font-sans antialiased`}
-      >
+      <body className={`${firaSans.variable} ${firaMono.variable} font-sans antialiased`}>
         {children}
         <Toaster />
       </body>

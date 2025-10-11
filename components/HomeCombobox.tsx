@@ -4,17 +4,8 @@ import { Bitcoin, ChevronsDown, SquareActivity } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { usePathname, useRouter } from "next/navigation";
 
 const navOptions = [
@@ -49,11 +40,9 @@ function HomeCombobox() {
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[150px] justify-between items-center light-blue-text font-medium text-gray-100 glass-effect"
+          className="w-[150px] justify-center items-center font-medium text-gray-100 glass-effect"
         >
-          {pathname === "/" || pathname === "/ai"
-            ? "Home"
-            : navOptions.find((nav) => nav.value === value)?.label || ""}
+          {pathname === "/" || pathname === "/ai" ? "Home" : navOptions.find((nav) => nav.value === value)?.label || ""}
           <ChevronsDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

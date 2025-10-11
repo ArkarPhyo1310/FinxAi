@@ -14,13 +14,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     <main className="auth-layout">
       <section className="auth-left-section scrollbar-hide-default">
         <Link href="/" className="auth-logo mb-8 lg:mb-0">
-          <Image
-            src="/assets/logo/logo.png"
-            alt="FinxAI logo"
-            width={140}
-            height={32}
-            className="w-auto"
-          />
+          <Image src="/assets/logo/logo.png" alt="FinxAI logo" width={140} height={32} className="w-auto" />
         </Link>
         <div className="pb-6 lg:pb-8 flex-1">{children}</div>
       </section>
@@ -28,12 +22,9 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       <section className="auth-right-section scrollbar-hide-default relative">
         <div className="z-10 relative lg:mt-4 lg:mb-16">
           <blockquote className="auth-blockquote">
-            &ldquo;Empowering your financial journey with intelligent insights
-            and a clear vision for the future. Discover the tools to navigate
-            the markets with confidence.&rdquo;
-            <footer className="mt-5 auth-testimonial-author">
-              &mdash; FinXAI
-            </footer>
+            &ldquo;Empowering your financial journey with intelligent insights and a clear vision for the future.
+            Discover the tools to navigate the markets with confidence.&rdquo;
+            <footer className="mt-5 auth-testimonial-author">&mdash; FinXAI</footer>
             <div className="flex-1 relative lg:p-16 mt-8 lg:mt-12">
               <Image
                 src="/assets/images/dashboard-preview.png"
