@@ -14,7 +14,7 @@ export const signUpWithEmail = async (data: SignUpFormData) => {
       },
     });
 
-    if (response) {
+    if (response && data.email !== "demo@finxai.app") {
       await inngest.send({
         name: "app/user.created",
         data: {
