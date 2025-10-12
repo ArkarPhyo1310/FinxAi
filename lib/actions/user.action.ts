@@ -9,8 +9,8 @@ import { signOut } from "./auth.actions";
 export const getAllUsersForNewsEmail = async () => {
   try {
     const users = await UserInfo.find(
-      { email: { $exists: true, $nin: [null, "demo@finxai.app"] }, subscribe: { $eq: true } },
-      { projection: { _id: 1, id: 1, email: 1, name: 1, country: 1 } },
+      { email: { $exists: true, $nin: [null, "demo@finxai.app"] }, subscribe: true },
+      { projection: { _id: 1, id: 1, email: 1, name: 1, country: 1 } }
     ).lean();
 
     return users
@@ -34,20 +34,26 @@ export const isUserSubscribe = async ({ email }: { email: string }) => {
       return { success: false, error: `User with email ${email} not found.` };
     }
 
-    return { success: true, data: userItem.subscribe };
+    return { success: true, data: userItem.subscribe ?? false };
   } catch (e) {
     console.error("Error getting user subscription status", e);
-    return { success: false, error: e };
+    return { success: false, error: e instanceof Error ? e.message : String(e) };
   }
 };
 
 export const updateUserSubscription = async ({ email, subscribe }: { email: string; subscribe: boolean }) => {
   try {
-    await UserInfo.findOneAndUpdate({ email }, { subscribe: subscribe });
-    return { success: true, message: `Updated subscription status for user ${email}` };
+    const result = await UserInfo.findOneAndUpdate({ email }, { subscribe });
+    if (!result) {
+      return { success: false, message: `User with email ${email} not found.` };
+    }
+    return { success: true, message: `Updated subscription status for user ${email}.` };
   } catch (e) {
     console.error("Error getting user subscription status", e);
-    return { success: false, message: `Error getting user subscription statusL ${e}` };
+    return {
+      success: false,
+      message: `Error getting user subscription statusL ${e instanceof Error ? e.message : String(e)}`,
+    };
   }
 };
 
@@ -84,15 +90,16 @@ export const deleteUser = async ({ password }: { password: string }) => {
     const db = mongoose.connection.db;
     if (!db) throw new Error("MongoDB is not Connected!");
 
+    // Optionally, delete user-related data from other collections
+    await db.collection("userinfos").deleteOne({ userId });
+    await db.collection("watchlists").deleteMany({ userId });
+
     // Delete user from auth (better-auth)
     await auth.api.deleteUser({ headers: await headers(), body: { password: password } });
 
     await signOut();
 
-    // Optionally, delete user-related data from other collections
     await db.collection("session").deleteOne({ id: userId });
-    await db.collection("userinfos").deleteOne({ userId });
-    await db.collection("watchlists").deleteMany({ userId });
 
     return { success: true, message: "Successfully deleted user" };
   } catch (err) {

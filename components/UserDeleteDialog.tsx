@@ -22,10 +22,13 @@ const UserDeleteDialog = ({ dialogProps }: { dialogProps: DialogProps }) => {
       if (result?.success) {
         router.push("/sign-in");
       } else {
-        toast.error("Account delete failed!", {
-          description:
-            result.error instanceof Error ? result.error.message : "Internal Server Error Error has occured.",
-        });
+        const description =
+          typeof result.error === "string"
+            ? result.error
+            : result.error instanceof Error
+            ? result.error.message
+            : "An unexpected error occurred.";
+        toast.error("Account delete failed!", { description });
       }
     } catch (e) {
       console.error("Failed to delete account", e);

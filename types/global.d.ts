@@ -41,6 +41,7 @@ declare global {
     info: string;
     control: Control;
     required?: boolean;
+    error?: FieldError;
   };
 
   type Option = {

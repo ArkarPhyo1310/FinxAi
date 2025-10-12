@@ -14,6 +14,7 @@ export interface UserInfoItem extends Document {
 const UserInfoSchema = new Schema<UserInfoItem>(
   {
     userId: { type: String, required: true, index: true },
+    name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
     subscribe: { type: Boolean, required: true, trim: true },
     country: { type: String, required: true, trim: true },
@@ -21,7 +22,7 @@ const UserInfoSchema = new Schema<UserInfoItem>(
     riskTolerance: { type: String, required: true, trim: true },
     preferredIndustry: { type: String, required: true, trim: true },
   },
-  { timestamps: false },
+  { timestamps: false }
 );
 
 const UserInfo: Model<UserInfoItem> =

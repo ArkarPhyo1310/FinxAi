@@ -39,7 +39,12 @@ const SignUp = () => {
     try {
       const result = await signUpWithEmail(data);
       if (result.success) {
-        registerUserInfo({ userId: result.data.user.id, data });
+        const userInfoResult = await registerUserInfo({ userId: result.data.user.id, data });
+        if (!userInfoResult.success) {
+          toast.error("Warning: Failed to save preferences", {
+            description: "Your account was created but preferences were not saved.",
+          });
+        }
         router.push("/");
       } else
         toast.error("Sign up failed!", {
@@ -145,6 +150,7 @@ const SignUp = () => {
           info="Get the latest updates, feature releases, and exclusive insights from FinxAI delivered straight to your inbox.
           You can unsubscribe at any time."
           control={control}
+          error={errors.subscribe}
         />
 
         <Button type="submit" disabled={isSubmitting} className="theme-btn w-full mt-5">
