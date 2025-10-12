@@ -8,6 +8,7 @@ declare global {
     fullName: string;
     email: string;
     password: string;
+    subscribe: boolean;
     country: string;
     investmentGoals: string;
     riskTolerance: string;
@@ -32,6 +33,15 @@ declare global {
     validation?: RegisterOptions;
     disabled?: boolean;
     value?: string;
+  };
+
+  type FormCheckboxProps = {
+    name: string;
+    label: string;
+    info: string;
+    control: Control;
+    required?: boolean;
+    error?: FieldError;
   };
 
   type Option = {

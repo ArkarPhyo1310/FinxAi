@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import { auth } from "@/lib/better-auth/auth";
-import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {

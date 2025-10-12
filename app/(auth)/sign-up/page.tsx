@@ -1,12 +1,14 @@
 "use client";
 
+import CheckboxField from "@/components/forms/CheckboxField";
 import CountrySelectField from "@/components/forms/CountrySelectField";
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import SelectField from "@/components/forms/SelectField";
 import { Button } from "@/components/ui/button";
 import { signUpWithEmail } from "@/lib/actions/auth.actions";
-import { INVESTMENT_GOALS, RISK_TOLERANCE_OPTIONS, PREFERRED_INDUSTRIES } from "@/lib/constans";
+import { registerUserInfo } from "@/lib/actions/user.action";
+import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from "@/lib/constans";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -23,6 +25,7 @@ const SignUp = () => {
       email: "",
       password: "",
       country: "",
+      subscribe: false,
       investmentGoals: "Growth",
       riskTolerance: "Medium",
       preferredIndustry: "Technology",
@@ -35,8 +38,15 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       const result = await signUpWithEmail(data);
-      if (result.success) router.push("/");
-      else
+      if (result.success) {
+        const userInfoResult = await registerUserInfo({ userId: result.data.user.id, data });
+        if (!userInfoResult.success) {
+          toast.error("Warning: Failed to save preferences", {
+            description: "Your account was created but preferences were not saved.",
+          });
+        }
+        router.push("/");
+      } else
         toast.error("Sign up failed!", {
           description: result.error ? result.error : "Failed to create an account.",
         });
@@ -133,6 +143,15 @@ const SignUp = () => {
             required
           />
         </div>
+
+        <CheckboxField
+          name="subscribe"
+          label="Subscribe to Newsletter"
+          info="Get the latest updates, feature releases, and exclusive insights from FinxAI delivered straight to your inbox.
+          You can unsubscribe at any time."
+          control={control}
+          error={errors.subscribe}
+        />
 
         <Button type="submit" disabled={isSubmitting} className="theme-btn w-full mt-5">
           {isSubmitting ? "Creating Account ... " : "Start Your Investing Journey"}

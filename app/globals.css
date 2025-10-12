@@ -159,10 +159,6 @@
     hover:shadow-lg active:shadow-sm transition-all duration-150;
   }
 
-  .light-blue-text {
-    @apply hover:text-[#37D0EE] font-medium;
-  }
-
   .header {
     @apply z-50 w-full h-[50px];
   }
