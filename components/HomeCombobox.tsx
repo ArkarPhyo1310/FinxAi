@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 
 const navOptions = [
   { label: "Stocks", value: "/stocks", icon: <SquareActivity /> },
