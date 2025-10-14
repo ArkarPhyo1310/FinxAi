@@ -9,9 +9,8 @@ import { searchStocks } from "@/lib/actions/finnhub.actions";
 import { Loader2, Search, Star, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 
-const SearchBox = ({ renderAs = "button", label = "Add stock" }: SearchCommandProps) => {
+const SearchBox = () => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -88,17 +87,10 @@ const SearchBox = ({ renderAs = "button", label = "Add stock" }: SearchCommandPr
 
   return (
     <div className="flex gap-3 items-center justify-start m-3">
-      {renderAs === "text" ? (
-        <span onClick={() => setOpen(true)} className="flex items-center justify-start gap-3 search-text">
-          <Search className="h-4 w-4" />
-          {label}
-        </span>
-      ) : (
-        <Button onClick={() => setOpen(true)} className="flex items-center justify-start gap-3 search-btn">
-          <Search className="h-4 w-4" />
-          {label}
-        </Button>
-      )}
+      <span onClick={() => setOpen(true)} className="flex items-center justify-start gap-3 search-text">
+        <Search className="h-4 w-4" />
+        Search
+      </span>
 
       <CommandDialog open={open} onOpenChange={setOpen} className="search-dialog glass-effect scrollbar-hide-default">
         <div className="search-field glass-effect !rounded-none">

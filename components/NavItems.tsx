@@ -16,13 +16,11 @@ const NavItems = () => {
   let navItems: NAVITEMS[] = [];
   if (pathname?.startsWith("/stocks")) {
     navItems = [
-      { href: "/stocks", title: "Dashboard" },
       { href: "/stocks/watchlist", title: "Watchlist" },
       { href: "/stocks/news", title: "News" },
     ];
   } else if (pathname?.startsWith("/cryptos")) {
     navItems = [
-      { href: "/cryptos", title: "Dashboard" },
       { href: "/cryptos/watchlist", title: "Watchlist" },
       { href: "/cryptos/news", title: "News" },
     ];
@@ -44,7 +42,7 @@ const NavItems = () => {
               if (href.endsWith("search"))
                 return (
                   <li key="search-trigger">
-                    <SearchBox renderAs="text" label="Search" />
+                    <SearchBox />
                   </li>
                 );
               return (
@@ -61,12 +59,12 @@ const NavItems = () => {
           </ul>
         </div>
       )}
-      <SearchBox renderAs="text" label="Search" />
+      <SearchBox />
 
       <Link
         href="/ai"
         className={`flex gap-3 items-center justify-start m-3 transition-colors hover:text-sky-500 ${
-          isActive("/ai") ? "text-sky-500" : "text-gray-400"
+          isActive("/ai") ? "text-sky-500" : "text-gray-500"
         }`}
       >
         <Stars className="h-4 w-4" />

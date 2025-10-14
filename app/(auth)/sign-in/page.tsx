@@ -3,7 +3,6 @@
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { signInWithEmail } from "@/lib/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -23,27 +22,6 @@ const SignIn = () => {
   });
 
   const router = useRouter();
-  const [demoLoading, setDemoLoading] = useState(false);
-  const handleDemo = async () => {
-    setDemoLoading(true);
-    const data: SignInFormData = {
-      email: "demo@finxai.app",
-      password: "Demo@123",
-    };
-
-    try {
-      const result = await signInWithEmail(data);
-      if (result.success) router.push("/");
-      else toast.error("Demo sign-in failed!", { description: result.error });
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error("Demo sign-in failed!", {
-        description: error instanceof Error ? error.message : "Failed to sign in.",
-      });
-    } finally {
-      setDemoLoading(false);
-    }
-  };
 
   const onSubmit = async (data: SignInFormData) => {
     try {
@@ -100,10 +78,6 @@ const SignIn = () => {
 
         <Button type="submit" disabled={isSubmitting} className="theme-btn w-full mt-5">
           {isSubmitting ? "Logging in..." : "Enter Your Account"}
-        </Button>
-
-        <Button type="button" variant="secondary" disabled={demoLoading} className="w-full mt-2" onClick={handleDemo}>
-          {demoLoading ? "Starting Demo..." : "Try Demo"}
         </Button>
 
         <FooterLink text="Dont't have an account?" linkText="Sign Up" href="/sign-up" />

@@ -5,7 +5,7 @@ const StockHome = () => {
   const scriptUrlBase = "https://s3.tradingview.com/external-embedding/embed-widget-";
 
   return (
-    <div className="flex h-screen home-wrapper w-full">
+    <div className="flex home-wrapper w-full">
       <section className="grid w-full gap-8 home-section">
         <div className="md:col-span-1 xl:col-span-1">
           <TradingViewWidget

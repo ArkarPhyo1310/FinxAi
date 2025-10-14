@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const navOptions = [
   { label: "Stocks", value: "/stocks", icon: <SquareActivity /> },
@@ -33,6 +34,16 @@ function HomeCombobox() {
     router.push(path);
   };
 
+  const isActive = (path: string) => pathname === path;
+
+  // Determine the label to display on the button
+  const buttonLabel =
+    pathname === "/" || pathname === "/ai" ? "Home" : navOptions.find((nav) => nav.value === value)?.label || "";
+
+  // Determine if the button's text should be styled as active
+  const isButtonActive =
+    ((pathname === "/" || pathname === "/ai") && buttonLabel === "Home") || (value !== "Home" && isActive(value));
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="bg-transparent mt-3 mb-3 ml-1">
@@ -40,9 +51,11 @@ function HomeCombobox() {
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[150px] justify-center items-center font-medium text-gray-100 glass-effect"
+          className="w-[150px] justify-center items-center font-bold text-gray-100 glass-effect"
         >
-          {pathname === "/" || pathname === "/ai" ? "Home" : navOptions.find((nav) => nav.value === value)?.label || ""}
+          <span className={`transition-colors ${isButtonActive ? "text-blue-400" : "text-gray-100"}`}>
+            {buttonLabel}
+          </span>
           <ChevronsDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

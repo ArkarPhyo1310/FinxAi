@@ -1,10 +1,24 @@
+import { auth } from "@/lib/better-auth/auth";
+import { User2 } from "lucide-react";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import HomeCombobox from "./HomeCombobox";
 import NavItems from "./NavItems";
 import UserDropdown from "./UserDropdown";
+import { Button } from "./ui/button";
 
-const Header = async ({ user }: { user: User }) => {
+const Header = async () => {
+  const session = await auth.api.getSession({ headers: await headers() });
+  let user = null;
+  if (session?.user) {
+    user = {
+      id: session.user.id,
+      name: session.user.name,
+      email: session.user.email,
+    };
+  }
+
   return (
     <header className="sticky top-6 z-50 w-full px-6">
       <div className="container header-wrapper glass-effect md:gap-2">
@@ -21,7 +35,16 @@ const Header = async ({ user }: { user: User }) => {
           <HomeCombobox />
           <NavItems />
         </nav>
-        <UserDropdown user={user} />
+        {user ? (
+          <UserDropdown user={user} />
+        ) : (
+          <Link href="/sign-in">
+            <Button variant="link" className="cursor-pointer">
+              <User2 className="w-4 h-4" />
+              Log In
+            </Button>
+          </Link>
+        )}
       </div>
     </header>
   );
